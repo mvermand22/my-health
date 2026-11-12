@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#3b4a6b">
+  <title>Hoofdpijn</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script type="module" src="app.js"></script>
+</head>
+<body>
+  <header>
+    <h1>Hoofdpijn</h1>
+    <button id="knop-instellingen" class="icoon" aria-label="Instellingen" title="Instellingen">⚙︎</button>
+  </header>
+
+  <div id="banner" class="banner" hidden>
+    <span id="banner-tekst"></span>
+    <button id="banner-knop" hidden>Versturen</button>
+  </div>
+
+  <main>
+    <form id="formulier" novalidate>
+      <section>
+        <label for="datum" class="titel">Datum</label>
+        <div class="rij">
+          <input type="date" id="datum" required>
+          <span id="dagnaam" class="dagnaam"></span>
+        </div>
+      </section>
+
+      <section>
+        <span class="titel">Wanneer</span>
+        <div class="chips" id="wanneer" data-enkel></div>
+      </section>
+
+      <section>
+        <span class="titel">Intensiteit</span>
+        <div class="chips groot" id="intensiteit" data-enkel></div>
+      </section>
+
+      <section>
+        <span class="titel">Medicatie</span>
+        <div class="chips" id="medicatie"></div>
+      </section>
+
+      <section>
+        <label for="oorzaak" class="titel">Oorzaak</label>
+        <input type="text" id="oorzaak" autocomplete="off" placeholder="bv. lopen">
+        <div class="chips klein" id="oorzaak-suggesties"></div>
+      </section>
+
+      <section>
+        <label for="opmerking" class="titel">Opmerkingen</label>
+        <textarea id="opmerking" rows="3"></textarea>
+      </section>
+
+      <p id="fout" class="fout" role="alert" hidden></p>
+      <button type="submit" id="knop-opslaan" class="primair">Opslaan</button>
+    </form>
+
+    <section id="recent" class="recent">
+      <div class="rij tussen">
+        <h2>Laatste ingaven</h2>
+        <button id="knop-vernieuwen" class="link">Vernieuwen</button>
+      </div>
+      <ul id="recent-lijst"><li class="stil">Meld je aan om je laatste ingaven te zien.</li></ul>
+      <a id="link-sheet" class="link" target="_blank" rel="noopener" hidden>Open spreadsheet ↗</a>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" role="status" hidden></div>
+
+  <dialog id="instellingen">
+    <form method="dialog" id="instellingen-form">
+      <h2>Instellingen</h2>
+      <label>Client-ID (Google Cloud)
+        <input id="set-client" required placeholder="…apps.googleusercontent.com">
+      </label>
+      <label>Spreadsheet (link of ID)
+        <input id="set-sheet" required placeholder="https://docs.google.com/spreadsheets/d/…">
+      </label>
+      <label>Naam van het tabblad
+        <input id="set-tab" required value="Opname">
+      </label>
+      <p class="stil klein">Deze gegevens blijven alleen op dit toestel.</p>
+      <div class="rij tussen">
+        <button type="button" id="knop-afmelden" class="link">Afmelden</button>
+        <button value="ok" class="primair">Bewaren</button>
+      </div>
+    </form>
+  </dialog>
+</body>
+</html>
