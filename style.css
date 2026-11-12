@@ -38,7 +38,7 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: calc(12px + env(safe-area-inset-top)) 16px 12px;
+  padding: calc(12px + env(safe-area-inset-top)) 16px 4px;
   background: var(--accent);
   color: #fff;
 }
@@ -46,6 +46,28 @@ header {
 h1 { margin: 0; font-size: 1.25rem; font-weight: 600; }
 h2 { margin: 0; font-size: 1rem; }
 main { max-width: 560px; margin: 0 auto; padding: 12px; }
+
+.tabs {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: var(--accent);
+}
+@media (prefers-color-scheme: dark) { .tabs { background: #26304a; } }
+.tab {
+  font: inherit;
+  font-weight: 600;
+  color: rgba(255,255,255,.7);
+  background: none;
+  border: 0;
+  border-bottom: 3px solid transparent;
+  padding: 12px 8px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.tab[aria-selected="true"] { color: #fff; border-bottom-color: #fff; }
 
 form#formulier, .recent {
   background: var(--kaart);

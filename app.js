@@ -151,7 +151,7 @@ async function vernieuwRecent(interactief) {
     await vraagToken();
   }
   const rijen = await haalRijen();
-  toonRecent(laatsteIngaven(rijen, 5));
+  toonRecent(laatsteIngaven(rijen, 20));
 }
 
 function toonRecent(lijst) {
@@ -348,6 +348,18 @@ toonSuggesties();
 wisFormulier();
 toonSheetLink();
 toonBanner();
+
+// ---------- tabbladen ----------
+function toonTab(paneelId) {
+  document.querySelectorAll('.tab').forEach((t) =>
+    t.setAttribute('aria-selected', String(t.dataset.paneel === paneelId)));
+  document.querySelectorAll('.paneel').forEach((p) => { p.hidden = p.id !== paneelId; });
+  window.scrollTo(0, 0);
+  if (paneelId === 'recent' && instellingenOk()) {
+    vernieuwRecent(true).catch((e) => toast(e.message, true));
+  }
+}
+document.querySelectorAll('.tab').forEach((t) => t.addEventListener('click', () => toonTab(t.dataset.paneel)));
 
 $('datum').addEventListener('change', toonDagnaam);
 $('formulier').addEventListener('submit', opslaan);

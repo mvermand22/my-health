@@ -23,8 +23,13 @@
     <button id="banner-knop" hidden>Versturen</button>
   </div>
 
+  <nav class="tabs" role="tablist">
+    <button role="tab" class="tab" aria-selected="true" data-paneel="formulier">Nieuwe ingave</button>
+    <button role="tab" class="tab" aria-selected="false" data-paneel="recent">Laatste ingaven</button>
+  </nav>
+
   <main>
-    <form id="formulier" novalidate>
+    <form id="formulier" class="paneel" novalidate>
       <section>
         <label for="datum" class="titel">Datum</label>
         <div class="rij">
@@ -63,7 +68,7 @@
       <button type="submit" id="knop-opslaan" class="primair">Opslaan</button>
     </form>
 
-    <section id="recent" class="recent">
+    <section id="recent" class="recent paneel" hidden>
       <div class="rij tussen">
         <h2>Laatste ingaven</h2>
         <button id="knop-vernieuwen" class="link">Vernieuwen</button>
