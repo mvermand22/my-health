@@ -39,7 +39,8 @@ function vraagToken() {
     const client = oauth2.initTokenClient({
       client_id: inst.clientId,
       scope: SCOPE,
-      prompt: '',
+      // Met een opgegeven account kiest Google meteen dat account; anders altijd laten kiezen.
+      ...(inst.account ? { hint: inst.account, prompt: '' } : { prompt: 'select_account' }),
       callback: (r) => {
         if (r.error) return reject(new Error(r.error_description || r.error));
         if (!oauth2.hasGrantedAllScopes(r, SCOPE)) {
@@ -299,6 +300,7 @@ function toast(tekst, fout = false) {
 function openInstellingen() {
   $('set-client').value = inst?.clientId || '';
   $('set-sheet').value = inst?.spreadsheetId || '';
+  $('set-account').value = inst?.account || '';
   $('set-tab').value = inst?.tab || 'Opname';
   $('instellingen').showModal();
 }
@@ -316,9 +318,12 @@ $('instellingen').addEventListener('close', () => {
   const nieuw = {
     clientId: $('set-client').value.trim(),
     spreadsheetId: spreadsheetIdUit($('set-sheet').value),
+    account: $('set-account').value.trim(),
     tab: $('set-tab').value.trim() || 'Opname',
   };
-  if (inst && (inst.clientId !== nieuw.clientId)) localStorage.removeItem(SLEUTEL.token);
+  if (inst && (inst.clientId !== nieuw.clientId || (inst.account || '') !== nieuw.account)) {
+    localStorage.removeItem(SLEUTEL.token);
+  }
   inst = nieuw;
   sheetIdCache = null;
   schrijf(SLEUTEL.instellingen, inst);
