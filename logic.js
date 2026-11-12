@@ -12,7 +12,7 @@ export const MEDICATIE = [
   { code: 'v', label: 'Voltaren' },
   { code: 'd', label: 'Dafalgan' },
 ];
-export const STANDAARD_OORZAKEN = ['lopen', 'verkoudheid'];
+export const OORZAAK_SUGGESTIES = ['lopen', 'verkoudheid', 'verstopte neus', 'ziek'];
 
 // Kolommen in tab "Opname". Kolommen E t/m J (neus, snow, licht, ...) blijven onaangeroerd.
 export const KOLOMMEN = {
@@ -75,19 +75,6 @@ export function controleer(ingave) {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(ingave.datum || '')) fouten.push('Kies een datum.');
   if (![1, 2, 3].includes(ingave.intensiteit)) fouten.push('Kies een intensiteit.');
   return fouten;
-}
-
-/** Oorzaak-suggesties: vaste suggesties + de vaakst gebruikte waarden uit kolom L. */
-export function oorzaakSuggesties(values, max = 8) {
-  const telling = new Map();
-  const i = kolomIndex(KOLOMMEN.oorzaak);
-  for (const rij of values || []) {
-    const w = String(rij[i] ?? '').trim().toLowerCase().replace(/!+$/, '').trim();
-    if (!/[a-zà-ÿ]/.test(w)) continue; // '???' en lege cellen overslaan
-    telling.set(w, (telling.get(w) || 0) + 1);
-  }
-  const populair = [...telling.entries()].sort((a, b) => b[1] - a[1]).map(([w]) => w);
-  return [...new Set([...STANDAARD_OORZAKEN, ...populair])].slice(0, max);
 }
 
 /** Laatste n ingevulde rijen (nieuwste eerst) als objecten om te tonen. */

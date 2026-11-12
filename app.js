@@ -1,7 +1,7 @@
 import {
   WANNEER, INTENSITEIT, MEDICATIE, LAATSTE_KOLOM,
   dagVanDeWeek, vandaagIso, bouwRij, volgendeRijnummer, controleer,
-  oorzaakSuggesties, laatsteIngaven, spreadsheetIdUit, STANDAARD_OORZAKEN,
+  laatsteIngaven, spreadsheetIdUit, OORZAAK_SUGGESTIES,
 } from './logic.js';
 
 const SCOPE = 'https://www.googleapis.com/auth/spreadsheets';
@@ -10,7 +10,6 @@ const SLEUTEL = {
   instellingen: 'hp.instellingen',
   wachtrij: 'hp.wachtrij',
   token: 'hp.token',
-  suggesties: 'hp.suggesties',
 };
 
 const $ = (id) => document.getElementById(id);
@@ -151,8 +150,6 @@ async function vernieuwRecent(interactief) {
     await vraagToken();
   }
   const rijen = await haalRijen();
-  schrijf(SLEUTEL.suggesties, oorzaakSuggesties(rijen));
-  toonSuggesties();
   toonRecent(laatsteIngaven(rijen, 5));
 }
 
@@ -205,7 +202,7 @@ const gekozen = (id) => [...$(id).querySelectorAll('.chip[aria-pressed="true"]')
 function toonSuggesties() {
   const houder = $('oorzaak-suggesties');
   houder.replaceChildren();
-  for (const s of lees(SLEUTEL.suggesties, STANDAARD_OORZAKEN)) {
+  for (const s of OORZAAK_SUGGESTIES) {
     const b = document.createElement('button');
     b.type = 'button';
     b.className = 'chip';
